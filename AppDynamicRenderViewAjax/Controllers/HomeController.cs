@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AppDynamicRenderViewAjax.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,7 +12,9 @@ namespace AppDynamicRenderViewAjax.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            NumberViewModel modelo = new NumberViewModel();
+            modelo.renderId = 0;
+            return View(modelo);
         }
 
         public ActionResult About()
@@ -26,5 +30,15 @@ namespace AppDynamicRenderViewAjax.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public ActionResult RenderizarNumeroSiguiente(int numeroActual = 0)
+        {
+            NumberViewModel modelo = new NumberViewModel();
+            modelo.renderId = numeroActual + 1;
+            return PartialView("_Number",modelo);
+        }
+
+
     }
 }

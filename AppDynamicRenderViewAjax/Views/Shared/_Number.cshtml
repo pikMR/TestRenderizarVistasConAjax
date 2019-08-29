@@ -1,0 +1,12 @@
+﻿@model AppDynamicRenderViewAjax.Models.NumberViewModel
+<input value="@Model.renderId" type="button" id="CajaValor" class="btn btn-primary btn-lg" />
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#CajaValor").on("click",function () {
+            var numeroActual = $("#CajaValor").val();
+            $("#ContenedorDinamico").load('@(Url.Action("RenderizarNumeroSiguiente", "Home",null, Request.Url.Scheme))?numeroActual=' + numeroActual);
+        });
+    });
+</script>
