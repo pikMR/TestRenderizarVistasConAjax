@@ -39,6 +39,24 @@ namespace AppDynamicRenderViewAjax.Controllers
             return PartialView("_Number",modelo);
         }
 
+        // GET: Home  
+        [HttpGet]
+        public ActionResult Employees()
+        {
+            return View();
+        }
+
+        /*
+         * Función que permite pasar json para tratar con JQUERY, no es una solución para renderizar.
+         * */
+        [HttpPost]
+        public JsonResult Employees(EmpModel obj)
+        {
+            ViewBag.Records = "Name : " + obj.Name + " City:  " + obj.City + " Addreess: " + obj.Address;
+            System.Threading.Thread.Sleep(2000); // este sleep representa una llamada a un servicio.
+            obj.CODIGO_POSTAL = "30009";
+            return Json(obj);
+        }
 
     }
 }
