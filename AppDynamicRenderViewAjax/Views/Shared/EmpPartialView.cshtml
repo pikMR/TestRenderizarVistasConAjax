@@ -1,0 +1,12 @@
+﻿@model AppDynamicRenderViewAjax.Models.EmpModel
+<div id="divEmp">
+    <hr />
+    @Html.TextBoxFor(x => x.CODIGO_POSTAL, new { @class = "form-control", @placeholder = "AQUI SE ACTUALIZA EL CP" })
+    @if (Model != null)
+    {
+        <h1>El codigo postal es : @Model.CODIGO_POSTAL</h1>
+        <div class="col-md-offset-2 col-md-12 text-success">
+            ViewBag: @ViewBag.Records
+        </div>
+    }
+</div>

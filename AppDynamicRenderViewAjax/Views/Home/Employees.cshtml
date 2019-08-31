@@ -1,7 +1,7 @@
 ﻿@model AppDynamicRenderViewAjax.Models.EmpModel
 
 @{
-    ViewBag.Title = "www.compilemode.com";
+    ViewBag.Title = "prueba ajax";
 }
 
 @using (Ajax.BeginForm("Employees", "Home",
@@ -51,7 +51,6 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
-        @Html.TextBoxFor(x => x.CODIGO_POSTAL, new { @class = "form-control", @placeholder = "HOLA" })
         <hr />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-12 text-success">
@@ -59,34 +58,38 @@
             </div>
         </div>
     </div>
-    <img src="~/Content/images/load.gif" style="display:none;width:54px;" id="loading" />
 }
 
+@* - no es necesario el render ya se hace con UpdateTargetId - Html.Partial("EmpPartialView", Model)*@
+
     <div id="divEmp">
-        @if (Model != null)
-        {
-            <h1>@Model.CODIGO_POSTAL</h1>
-        }
+        <hr />
+        @Html.TextBoxFor(x => x.CODIGO_POSTAL, new { @class = "form-control", @placeholder = "AQUI SE ACTUALIZA EL CP", @id = "codpostal" })     <img src="~/Content/images/load.gif" style="display:none;width:54px;" id="loading" />
     </div>
 
 <script type="text/javascript">
     function onSuccess(response) {
-        var message = "CP: " + response.CODIGO_POSTAL;
+        /* -- modo alternativo: esta parte es util cuando desde el back devolvemos Json(obj);
+         * var message = "CP: " + response.CODIGO_POSTAL;
         message += "\nName: " + response.Name;
         message += "\nAddress: " + response.Address;
         message += "\nCity: " + response.City;
-        alert(message);
+        .html(message)
+        */
+        console.log("onSuccess");
+        // caso concreto en el que queremos actualizar fuera del render.
+        $("codpostal").remove();
     }
     function onFailure(response) {
         console.log("OnFailure.");
         console.log(response);
     }
     function onBegin(response) {
-        alert("OnBegin.");
+        console.log("OnBegin.");
         console.log(response);
     }
     function onComplete(response) {
-        alert("OnComplete.");
+        console.log("OnComplete.");
         console.log(response);
     }
 

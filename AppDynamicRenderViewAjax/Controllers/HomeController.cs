@@ -1,9 +1,4 @@
 ﻿using AppDynamicRenderViewAjax.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AppDynamicRenderViewAjax.Controllers
@@ -48,7 +43,7 @@ namespace AppDynamicRenderViewAjax.Controllers
 
         /*
          * Función que permite pasar json para tratar con JQUERY, no es una solución para renderizar.
-         * */
+         
         [HttpPost]
         public JsonResult Employees(EmpModel obj)
         {
@@ -57,6 +52,17 @@ namespace AppDynamicRenderViewAjax.Controllers
             obj.CODIGO_POSTAL = "30009";
             return Json(obj);
         }
+        */
 
+        [HttpPost]
+        public ActionResult Employees(EmpModel obj)
+        {
+            ViewBag.Records = "Name : " + obj.Name + " City:  " + obj.City + " Addreess: " + obj.Address;
+            System.Threading.Thread.Sleep(2000); // este sleep representa una llamada a un servicio.
+            obj.CODIGO_POSTAL = "30009";
+            obj.City = "MURCIA";
+            return PartialView("EmpPartialView",obj);
+            //return Json(obj);
+        }
     }
 }
