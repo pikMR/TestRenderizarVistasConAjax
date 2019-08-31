@@ -1,0 +1,51 @@
+﻿@model AppDynamicRenderViewAjax.Models.EmpModel
+
+<div class="form-horizontal">
+    <hr />
+    @Html.DropDownList("Codigos postales",new SelectList(new List<string> { "30009", "30010", "30011" }), "-- Select --", new { @id = "selectedBox" })
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div id="divGet">
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Buscar" class="btn btn-primary" id="CargarDatos" />
+        </div>
+    </div>
+    <hr />
+    <input id="getCP" type="text" placeholder="ESCRIBE NOMBRE CIUDAD" />
+    <input type="submit" value="Obtener CP" class="btn btn-primary" id="CargarCP" />
+</div>
+
+<script>    
+    $(function () {
+        // pasamos cp y nos da render (GET)
+        $("#CargarDatos").click(function () {
+            var url = "@Url.Action("DataEmployees", "Home")";
+            var index_selected = $("#selectedBox")[0].options.selectedIndex;
+            var listselected = $("#selectedBox")[0].options[index_selected].value;
+            var data = { listselected: listselected };
+            $.get(url, data).done(function (data) {
+                //$("#divGet").append(data); -- agrega elemento
+                $("#divGet").html(data);
+            }).fail(manejarErrorAjax);
+        });
+
+        $("#CargarCP").click(function () {
+            var url = "@Url.Action("DataEmployees", "Home")";
+            var data = { Name: "", City: $("#getCP").val(), Address: "", CODIGO_POSTAL: ""};
+
+            $.post(url, data).done(function (res) {
+                if (res.CODIGO_POSTAL) {
+                    $("#getCP").val(res.CODIGO_POSTAL);
+                }
+            }).fail(manejarErrorAjax);
+        })
+
+        function manejarErrorAjax(err) {
+            console.log("errorajax:");
+            console.dir(err);
+        }
+    })
+
+</script>

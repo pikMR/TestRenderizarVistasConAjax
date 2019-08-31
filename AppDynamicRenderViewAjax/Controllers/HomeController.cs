@@ -1,5 +1,7 @@
 ﻿using AppDynamicRenderViewAjax.Models;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace AppDynamicRenderViewAjax.Controllers
 {
@@ -41,6 +43,12 @@ namespace AppDynamicRenderViewAjax.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Dropdown()
+        {
+            return View();
+        }
+
         /*
          * Función que permite pasar json para tratar con JQUERY, no es una solución para renderizar.
          
@@ -63,6 +71,32 @@ namespace AppDynamicRenderViewAjax.Controllers
             obj.City = "MURCIA";
             return PartialView("EmpPartialView",obj);
             //return Json(obj);
+        }
+
+        public PartialViewResult DataEmployees(string listselected)
+        {
+            var usuarios = new List<EmpModel>()
+            {
+                new EmpModel() { Address = "Calle Espatula",City = "Madrid",Name="Paco", CODIGO_POSTAL = "30009"},
+                new EmpModel() { Address = "Calle Latifundio",City = "Jaen",Name="Juan",CODIGO_POSTAL = "30010"},
+                new EmpModel() { Address = "Calle Segura",City = "Murcia",Name="Macario",CODIGO_POSTAL = "30011"}
+            };
+
+            var _selected = usuarios.FirstOrDefault(x => x.CODIGO_POSTAL.Equals(listselected));
+            return PartialView("Form",_selected);
+        }
+
+        [HttpPost]
+        public JsonResult DataEmployees(EmpModel data)
+        {
+            var usuarios = new List<EmpModel>()
+            {
+                new EmpModel() { Address = "Calle Espatula",City = "Madrid",Name="Paco", CODIGO_POSTAL = "30009"},
+                new EmpModel() { Address = "Calle Latifundio",City = "Jaen",Name="Juan",CODIGO_POSTAL = "30010"},
+                new EmpModel() { Address = "Calle Segura",City = "Murcia",Name="Macario",CODIGO_POSTAL = "30011"}
+            };
+            var _selected = usuarios.FirstOrDefault(x => x.City.Equals(data.City));
+            return Json(_selected);
         }
     }
 }

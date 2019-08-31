@@ -201,6 +201,8 @@
     <Content Include="Views\Shared\_Number.cshtml" />
     <Content Include="Views\Home\Employees.cshtml" />
     <Content Include="Views\Shared\EmpPartialView.cshtml" />
+    <Content Include="Views\Home\Dropdown.cshtml" />
+    <Content Include="Views\Shared\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
